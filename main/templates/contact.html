@@ -2,9 +2,43 @@
 {% block content %}
     <h1>Contact Us Form</h1>
     <p>plese fill out the all of this fields</p>
+    <!--
     <form method="POST">
     	{% csrf_token %}
     	{{form}}<br>
     	<button type="submit" class="btn btn-success">Submit</button>
     </form>
+-->
+<div class="container">
+    <form method="POST">{% csrf_token %}
+    	<div class="form-group">
+    		{{ form.name.label.tag }}
+    		<input type="text" class="form-control {% if form.name.errors %}is-invalid
+    			
+    		{% endif %}" name="name" id="id_name" placeholder="Enter Your Name" value="{{ form.name.value|default:"" }}">
+    		{% if form.name.errors %}
+    		    <div class="invalid-feedback">
+    		    	{{form.name.errors}}
+    		    </div>
+    		
+    		{% endif %}
+  		</div>
+
+  		<div class="form-group">
+    		{{ form.message.label.tag }}
+    		<textarea class="form-control {% if form.message.errors %}is-invalid
+    			
+    		{% endif %}" id="id-message" name="message" rows="3">{{ form.message.value|default:"" }}
+    	</textarea>
+    		{% if form.message.errors %}
+    		    <div class="invalid-feedback">
+    		    	{{form.message.errors}}
+    		    </div>
+    		
+    		{% endif %}
+  		</div>
+  		<button type="submit" class="btn btn-success">Submit</button>
+
+    </form>
+    </div>
 {% endblock content %}
