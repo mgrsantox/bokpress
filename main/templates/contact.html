@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Contact Us Form</h1>
+    <p>plese fill out the all of this fields</p>
+    <form method="POST">
+    	{% csrf_token %}
+    	{{form}}<br>
+    	<button type="submit" class="btn btn-success">Submit</button>
+    </form>
+{% endblock content %}

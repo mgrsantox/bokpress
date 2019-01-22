@@ -24,6 +24,15 @@ SECRET_KEY = 'n=zx$4r4oa9+yw0!=yo52@vem1t^lf+)@s-z=qov5m5za)&!s0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+if not DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST_USER = 'username'
+    EMAIL_HOST = 'smtp.domain.com'
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_PASSWORD = 'password'
+else:
+    EMAIL_BACKEND = ("django.core.mail.backends.console.EmailBackend")
 
 ALLOWED_HOSTS = []
 
@@ -31,6 +40,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'main.apps.MainConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,7 +64,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -118,4 +128,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = ('BASE_DIR', 'static')
+# STATICFILES_DIRS = ('BASE_DIR', 'static')
