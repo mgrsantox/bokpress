@@ -29,6 +29,7 @@
     </ul>
   </div>
 </nav>
+<div class="container">
 {% block content %}
 
 	<h1>Hello Readers !!</h1>
@@ -80,6 +81,12 @@
 <div class="alert alert-dark" role="alert">
   A simple dark alert—check it out!
 </div>
+
+<h1>Message</h1>
+{% for message in messages %}
+  <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+{% endfor %}
 {% endblock content %}
+</div>
 </body>
 </html>

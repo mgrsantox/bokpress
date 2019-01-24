@@ -40,6 +40,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'widget_tweaks',
     'main.apps.MainConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -79,6 +80,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+
+AUTH_USER_MODEL = 'main.User'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
