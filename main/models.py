@@ -3,6 +3,9 @@ from django.contrib.auth.models import (
     AbstractUser,
     BaseUserManager,)
 
+
+# for Basket Functionality
+from django.core.validators import MinValueValidator
 # Create your models here.
 
 
@@ -92,3 +95,54 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = UserManager()
+
+
+# Addresss Model
+class Address(models.Model):
+    SUPPORTED_PLACES = (
+        ("pok", "Pokhara"),
+        ("ktm", "Kathmandu"),
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=60)
+    address1 = models.CharField("Address line 1", max_length=60)
+    address2 = models.CharField("Address line 2", max_length=60, blank=True)
+    zip_code = models.CharField("ZIP / Postal code", max_length=12)
+    city = models.CharField(max_length=60, choices=SUPPORTED_PLACES)
+
+    def __str__(self):
+        return ", ".join(
+            [
+                self.name,
+                self.address1,
+                self.address2,
+                self.zip_code,
+                self.city
+            ]
+        )
+# Basket Functionality
+
+
+class Basket(models.Model):
+    OPEN = 10
+    SUBMITTED = 20
+    STATUSES = ((OPEN, "Open"), (SUBMITTED, "Submitted"))
+
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, blank=True, null=True
+    )
+    status = models.IntegerField(choices=STATUSES, default=OPEN)
+
+    def is_empty(self):
+        return self.basketline_set.all().count() == 0
+
+    def count(self):
+        return sum(i.quantity for i in self.basketline_set.all())
+
+
+class BasketLine(models.Model):
+    basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(
+        default=1, validators=[MinValueValidator(1)]
+    )

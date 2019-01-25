@@ -30,6 +30,13 @@
   </div>
 </nav>
 <div class="container">
+  <h1>Basket</h1>
+{% if request.basket %}
+       <div>
+         {{ request.basket.count }}
+         items in basket
+       </div>
+     {% endif %}
 {% block content %}
 
 	<h1>Hello Readers !!</h1>
@@ -86,6 +93,7 @@
 {% for message in messages %}
   <div class="alert alert-{{ message.tags }}">{{ message }}</div>
 {% endfor %}
+
 {% endblock content %}
 </div>
 </body>
